@@ -2,19 +2,18 @@ import fs from "fs";
 const getValueNames = (file: string) => {
   let names: Array<string> = [];
   let name = "";
-
+  const addName = () => {
+    names.push(name);
+    name = "";
+  };
   for (const char of file) {
     if (char === "\r" || char === "\n") {
-      names.push(name);
-      name = "";
+      addName();
       break;
     }
     if (char != ",") {
       name += char;
-    } else {
-      names.push(name);
-      name = "";
-    }
+    } else addName();
   }
   return names;
 };
