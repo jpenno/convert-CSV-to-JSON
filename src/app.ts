@@ -1,5 +1,2 @@
-export const add = (n1: number, n2: number) => {
-  return n1 + n2;
-};
-
-console.log(add(1, 1));
+import {getValueNames, readFile } from './convert-CSV-to-JSON' 
+readFile("../data/Untitled spreadsheet - Sheet1.csv");
