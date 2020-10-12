@@ -1,4 +1,3 @@
-// const getValueNames = require("../app.ts").getValueNames;
 import { getValueNames } from '../convert-CSV-to-JSON';
 
 test("should show csv value names", () => {
