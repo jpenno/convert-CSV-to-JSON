@@ -25,17 +25,31 @@ const getValueNames = (file: string) => {
 };
 
 const getValues = (file: string) => {
-  if (!endOfNames || names.length === 0) getValueNames(file);
-
-  let value = "";
-  let tmpfile = file.replace(/\r?\n|\r/g, ",");
-  for (let i = endOfNames - 1; i < tmpfile.length; i++) {
-    if (tmpfile[i] === ",") {
-      values.push(value);
-      value = "";
-    } else value += tmpfile[i];
+  if (!endOfNames) getValueNames(file);
+  const test = file
+    .slice(endOfNames)
+    .replace(/\r?\n|\r/g, ",")
+    .split(",");
+  let newValue = "";
+  let values: Array<string> = [];
+  let inString = false;
+  for (let i = 0; i < test.length; i++) {
+    const element = test[i];
+    if (element[0] === '"') {
+      inString = true;
+      newValue += element;
+    } else if (element[element.length - 1] === '"') {
+      inString = false;
+      newValue += element;
+      values.push(newValue);
+      newValue = "";
+    } else {
+      if (inString) {
+        newValue += element;
+      } else values.push(element);
+    }
   }
-  values.push(value);
+  console.log("values", values);
   return values;
 };
 
